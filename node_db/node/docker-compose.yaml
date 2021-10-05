@@ -5,7 +5,7 @@ services:
     app:
         build:             
             context: ./
-
+        image: app
         container_name: app
         networks: 
             - node-network
@@ -36,7 +36,8 @@ services:
         
     proxy:
         build:
-            context: ../nginx/                    
+            context: ../nginx/
+        image: proxy                   
         container_name: proxy
         tty: true
         networks:
