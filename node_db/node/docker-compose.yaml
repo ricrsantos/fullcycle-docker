@@ -5,17 +5,18 @@ services:
     app:
         build:             
             context: ./
+
         container_name: app
-        # executa o dockerize no entrypoint para que o container espere o container db antes de iniciar e depois executar o entry point da imagem do node
-        entrypoint: dockerize -wait tcp://db:3306 -timeout 30s docker-entrypoint.sh
-        command: node index.js
         networks: 
             - node-network
         volumes: 
             - ./:/usr/src/app
         tty: true
-        # ports: 
-        #     - "3000:3000"
+
+        # executa o dockerize no entrypoint para que o container espere o container db antes de iniciar e depois executar o entry point da imagem do node
+        entrypoint: dockerize -wait tcp://db:3306 -timeout 30s docker-entrypoint.sh
+        command: bash -c "npm install && node index.js"
+        
         depends_on: 
             - db
 
